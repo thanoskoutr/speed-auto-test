@@ -32,9 +32,10 @@ getResults = (callback) => {
 
 let testingInterval = 12000;
 let tokenAPI = "YXNkZmFzZGxmbnNkYWZoYXNkZmhrYWxm"
+let verboseOption = false;
 
 const argv = yargs
-  .usage('Usage: $0 -option value \n e.g $0 -i 12 -t YXNkZmFzZGxmbnNkYWZoYXNkZmhrYWxm')
+  .usage('Usage: $0 -option value \n e.g $0 -i 12 -t YXNkZYXNkZasfJSASYXNkZ')
   .option('interval', {
     alias: 'i',
     type: 'number',
@@ -43,7 +44,12 @@ const argv = yargs
   .option('token', {
     alias: 't',
     type: 'string',
-    describe: 'Add the fast.com required API token'
+    describe: 'Add the fast.com required API token (If default is broken)'
+  })
+  .option('verbose', {
+    alias: 'v',
+    type: 'boolean',
+    describe: 'Run with verbose logging'
   })
   .demandOption(['interval'], 'Please provide a valid timing interval. \n Minimum value: 12 sec \n Recommended value: 3600 sec')
   .help()
@@ -60,19 +66,24 @@ if (argv.i) {
     // throw new Error("Testing Interval can not be less than 12 seconds.");
   }
   testingInterval = argv.i * 1000;
-  console.log("Chosen interval: ", argv.i, "sec");
+  console.log("Chosen interval:", argv.i, "sec");
 }
 
 if (argv.t) {
   tokenAPI = argv.t;
-  console.log("Chosen token: ", argv.t);
+  console.log("Chosen token:", argv.t);
+}
+
+if (argv.v) {
+  verboseOption = true;
+  console.log("Chosen verbose output:", argv.v);
 }
 
 
 let speedtest = new FastSpeedtest({
     token: tokenAPI, // required
     // token: "a",
-    verbose: true, // default: false
+    verbose: verboseOption, // default: false
     timeout: 10000, // default: 5000
     https: true, // default: true
     urlCount: 5, // default: 5
@@ -81,12 +92,12 @@ let speedtest = new FastSpeedtest({
 });
 
 
-const intrvalID = setInterval(() => {
+const intervalID = setInterval(() => {
 
-  getResults((err, res) => {
+  getResults((err, speedResult) => {
     if (err) {
       console.log("ERROR: ", err);
-      clearInterval(intrvalID);
+      clearInterval(intervalID);
     }
     else {
 
@@ -94,16 +105,14 @@ const intrvalID = setInterval(() => {
 
       const resObj = {
         Timestamp: currentTime,
-        Speed: res
+        Speed: speedResult + ' Mbps'
       };
-
-      console.log(resObj);
 
       // Open JSON file and append new value
       fs.readFile(resultsFile, 'utf8', (err, data) => {
         if (err) {
           console.log("ERROR: ", err);
-          clearInterval(intrvalID);
+          clearInterval(intervalID);
         }
         else {
           // If empty file, JSON.parse crashes
@@ -117,12 +126,16 @@ const intrvalID = setInterval(() => {
           objFromFile.push(resObj);
           jsonToFile = JSON.stringify(objFromFile, null, 2);
 
-          console.log(objFromFile);
+          console.log(resObj);
+
+          if (verboseOption) {
+            console.log(objFromFile);
+          }
 
           fs.writeFile(resultsFile, jsonToFile, (err) => {
             if (err) {
               console.log("ERROR: ", err);
-              clearInterval(intrvalID);
+              clearInterval(intervalID);
             }
           });
         }

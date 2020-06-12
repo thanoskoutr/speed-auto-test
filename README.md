@@ -7,6 +7,8 @@
 - [ ] Add testing framework + testcases
 - [ ] Change error handling on each case / Make further error checks - testcases
 - [ ] Find best way to write to file (sync vs async, append vs write)
+- [ ] Add more command line arguments for options on fast API (https, urlCount, timeout, unit)
+- [ ] Add command line argument for result file
 
 
 ## To Fix list
