@@ -11,5 +11,41 @@
 - [ ] Add command line argument for result file
 
 
-## To Fix list
-- [ ] FIX: port it, change intervals
+
+## Installation & Running
+
+- Clone the repository in a folder:
+```
+git clone https://github.com/thanoskoutr/speed-auto-test.git
+```
+- In the cloned repository, download dependencies:
+```
+npm install
+```
+- Run the tool, with the appropriate parameters:
+```
+node app.js -i 12
+```
+
+## Info
+The app utilizes the following already made fast.com API tool: https://github.com/branchard/fast-speedtest-api
+
+### Token
+Follow the instructions in @branchard repository to to find a new token if the default one is outdated, and pass it as a parameter:
+```
+app.js -i 12 -t YXNkZYXNkZasfJSASYXNkZ
+```
+
+### Timing Interval
+You can choose the timing interval of your choice for when to take measurements.
+**Minimum Value** is every 12 seconds.
+**Recommended Value** is every 3600 seconds (1 hour).
+```
+app.js -i 3600
+```
+
+### Help
+To see further help for each command line option, use the `-h` or `--help` flag.
+```
+app.js -h
+```
