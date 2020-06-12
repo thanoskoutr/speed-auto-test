@@ -1,6 +1,7 @@
 # speed-auto-test
 
 ## To Do List
+- [ ] FIX: when there is no file results.json it crashes (if there is no file, create it)
 - [x] Add parameter for API token
 - [x] Add parameter for time test interval
 - [ ] Auto update API token / Catch BAD_TOKEN error
@@ -25,6 +26,10 @@ npm install
 - Run the tool, with the appropriate parameters:
 ```
 node app.js -i 12
+```
+- (TO BE FIXED) create a file named `results.json` in the directory, because it crashes if it's not found
+```
+touch results.json
 ```
 
 ## Info
