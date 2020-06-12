@@ -1,9 +1,9 @@
 const FastSpeedtest = require("fast-speedtest-api");
 const fs = require('fs');
 const jsonfile = require('jsonfile');
+const yargs = require('yargs');
 
 resultsFile = 'results.json';
-
 
 function getCurrentTime() {
   const date_ob = new Date();
@@ -20,18 +20,6 @@ function getCurrentTime() {
   return time;
 }
 
-let speedtest = new FastSpeedtest({
-    token: "YXNkZmFzZGxmbnNkYWZoYXNkZmhrYWxm", // required
-    // token: "a",
-    verbose: true, // default: false
-    timeout: 10000, // default: 5000
-    https: true, // default: true
-    urlCount: 5, // default: 5
-    bufferSize: 8, // default: 8
-    unit: FastSpeedtest.UNITS.Mbps // default: Bps
-});
-
-
 getResults = (callback) => {
   speedtest.getSpeed().then(s => {
       // console.log(`Speed: ${s} Mbps`);
@@ -41,6 +29,57 @@ getResults = (callback) => {
       callback(e.message);
   });
 }
+
+let testingInterval = 12000;
+let tokenAPI = "YXNkZmFzZGxmbnNkYWZoYXNkZmhrYWxm"
+
+const argv = yargs
+  .usage('Usage: $0 -option value \n e.g $0 -i 12 -t YXNkZmFzZGxmbnNkYWZoYXNkZmhrYWxm')
+  .option('interval', {
+    alias: 'i',
+    type: 'number',
+    description: 'Choose the timing interval of your choice (in sec)'
+  })
+  .option('token', {
+    alias: 't',
+    type: 'string',
+    describe: 'Add the fast.com required API token'
+  })
+  .demandOption(['interval'], 'Please provide a valid timing interval. \n Minimum value: 12 sec \n Recommended value: 3600 sec')
+  .help()
+  .alias('help', 'h')
+  .epilog('copyleft 2020')
+  .argv;
+
+// console.log(argv);
+
+if (argv.i) {
+  if (argv.i * 1000 < 12000) {
+    console.log("Testing Interval can not be less than 12 seconds.");
+    return;
+    // throw new Error("Testing Interval can not be less than 12 seconds.");
+  }
+  testingInterval = argv.i * 1000;
+  console.log("Chosen interval: ", argv.i, "sec");
+}
+
+if (argv.t) {
+  tokenAPI = argv.t;
+  console.log("Chosen token: ", argv.t);
+}
+
+
+let speedtest = new FastSpeedtest({
+    token: tokenAPI, // required
+    // token: "a",
+    verbose: true, // default: false
+    timeout: 10000, // default: 5000
+    https: true, // default: true
+    urlCount: 5, // default: 5
+    bufferSize: 8, // default: 8
+    unit: FastSpeedtest.UNITS.Mbps // default: Bps
+});
+
 
 const intrvalID = setInterval(() => {
 
@@ -92,4 +131,4 @@ const intrvalID = setInterval(() => {
     }
   });
 
-}, 12000);
+}, testingInterval);
