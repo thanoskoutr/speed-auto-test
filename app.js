@@ -68,11 +68,10 @@ const intrvalID = setInterval(() => {
 
       // Convert and save JSON to list
       const json = JSON.stringify(results);
-      resultsJSON.push(json);
-      console.log(resultsJSON);
+      console.log(json);
 
       // Write whole JSON each time --> FIX: implement with fs.createWriteStream
-      fs.writeFile('results.json', resultsJSON, (err) => {
+      fs.writeFile('results.json', json, (err) => {
         if (err) {
           console.log("ERROR: ", err);
           clearInterval(intrvalID);

@@ -11,5 +11,4 @@
 ## To Fix list
 - [ ] FIX: Make write task a writing stream for file appending
 - [ ] FIX: Make it windows Portable
-- [ ] FIX: JSON object conversion to file
-- [ ] FIX: Make it windows Portable
+- [x] FIX: JSON object conversion to file
