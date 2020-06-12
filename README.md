@@ -6,9 +6,10 @@
 - [ ] Add parameter for time test interval
 - [ ] Add testing framework + testcases
 - [ ] Change error handling on each case / Make further error checks - testcases
+- [ ] Find best way to write to file (sync vs async, append vs write)
 
 
 ## To Fix list
-- [ ] FIX: Make write task a writing stream for file appending
-- [ ] FIX: Make it windows Portable
-- [x] FIX: JSON object conversion to file
+- [x] FIX: empty file -> add []
+- [ ] FIX: add parameters
+- [ ] FIX: port it, change intervals
