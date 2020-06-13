@@ -2,6 +2,8 @@
 
 ## To Do List
 - [ ] FIX: when there is no file results.json it crashes (if there is no file, create it)
+- [ ] FIX: when computer sleeps or closes, app stops
+- [ ] FIX: make package.json script for running app
 - [x] Add parameter for API token
 - [x] Add parameter for time test interval
 - [ ] Auto update API token / Catch BAD_TOKEN error
@@ -10,6 +12,7 @@
 - [ ] Find best way to write to file (sync vs async, append vs write)
 - [ ] Add more command line arguments for options on fast API (https, urlCount, timeout, unit)
 - [ ] Add command line argument for result file
+- [ ] Webpack it, or other build tool
 
 
 
