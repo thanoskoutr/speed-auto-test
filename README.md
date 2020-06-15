@@ -4,6 +4,7 @@
 - [ ] FIX: when there is no file results.json it crashes (if there is no file, create it)
 - [ ] FIX: when computer sleeps or closes, app stops
 - [ ] FIX: make package.json script for running app
+- [ ] FIX: time format (include zeroes)
 - [x] Add parameter for API token
 - [x] Add parameter for time test interval
 - [ ] Auto update API token / Catch BAD_TOKEN error
